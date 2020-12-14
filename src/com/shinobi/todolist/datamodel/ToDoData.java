@@ -1,6 +1,7 @@
 package com.shinobi.todolist.datamodel;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,7 +18,7 @@ public class ToDoData {
 
     private static ToDoData instance = new ToDoData();
     private static String fileName = "ToDoListItems.txt";
-    private List<ToDoItem> toDoItems;
+    private ObservableList<ToDoItem> toDoItems;
     private DateTimeFormatter formatter;
 
     public static ToDoData getInstance() {
@@ -28,8 +29,12 @@ public class ToDoData {
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     }
 
-    public List<ToDoItem> getToDoItems() {
+    public ObservableList<ToDoItem> getToDoItems() {
         return toDoItems;
+    }
+
+    public void addTodoItem(ToDoItem item){
+        toDoItems.add(item);
     }
 
 //    public void setToDoItems(List<ToDoItem> toDoItems) {
@@ -40,21 +45,17 @@ public class ToDoData {
         toDoItems = FXCollections.observableArrayList();
         Path path = Paths.get(fileName);
         BufferedReader br = Files.newBufferedReader(path);
-
         String input;
 
         try{
             while((input = br.readLine()) != null){
                 String[] itemPieces = input.split("\t");
-
                 String shortDescription = itemPieces[0];
                 String details = itemPieces[1];
                 String dateString = itemPieces[2];
-
                 LocalDate date = LocalDate.parse(dateString, formatter);
                 ToDoItem toDoItem = new ToDoItem(shortDescription, details, date);
                 toDoItems.add(toDoItem);
-
             }
 
         } finally {
@@ -85,8 +86,10 @@ public class ToDoData {
                 bw.close();
             }
         }
+    }
 
-
+    public void deleteTodoItem (ToDoItem item){
+        toDoItems.remove(item);
     }
 
 }
