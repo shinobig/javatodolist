@@ -4,12 +4,15 @@ import com.shinobi.todolist.datamodel.ToDoData;
 import com.shinobi.todolist.datamodel.ToDoItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
@@ -19,6 +22,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +88,14 @@ public class Controller {
                 }
             }
         });
+
+        SortedList<ToDoItem> sortedList = new SortedList<ToDoItem>(ToDoData.getInstance().getToDoItems(),
+                new Comparator<ToDoItem>() {
+                    @Override
+                    public int compare(ToDoItem o1, ToDoItem o2) {
+                        return 0;
+                    }
+                });
 
         toDoListView.setItems(ToDoData.getInstance().getToDoItems());
         toDoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -152,6 +164,16 @@ public class Controller {
             ToDoItem newItem = controller.processResults();
 //            toDoListView.getItems().setAll(ToDoData.getInstance().getToDoItems());
             toDoListView.getSelectionModel().select(newItem);
+        }
+    }
+
+    @FXML
+    public void handleKeyPress(KeyEvent keyEvent){
+        ToDoItem selectedItem = toDoListView.getSelectionModel().getSelectedItem();
+        if(selectedItem != null){
+            if(keyEvent.getCode().equals(KeyCode.DELETE)){
+                deleteItem(selectedItem);
+            }
         }
     }
 

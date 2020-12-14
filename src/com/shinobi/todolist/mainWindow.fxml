@@ -11,21 +11,30 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Button?>
 <BorderPane fx:id="mainBorderPane" fx:controller="com.shinobi.todolist.Controller"
             xmlns:fx="http://javafx.com/fxml">
 
     <top>
-        <MenuBar>
-            <Menu text="file">
-                <MenuItem text="New..." onAction="#showNewItemDialog"/>
-                <SeparatorMenuItem/>
-                <MenuItem text="Exit"/>
-            </Menu>
-        </MenuBar>
+        <VBox>
+            <MenuBar>
+                <Menu text="file">
+                    <MenuItem text="New..." onAction="#showNewItemDialog"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Exit"/>
+                </Menu>
+            </MenuBar>
+            <ToolBar>
+                <HBox>
+                    <Button text="New..." onAction="#showNewItemDialog" />
+                </HBox>
+            </ToolBar>
+        </VBox>
     </top>
 
     <left>
-        <ListView fx:id="toDoListView"/>
+        <ListView fx:id="toDoListView" onKeyPressed="#handleKeyPress"/>
     </left>
     <center>
         <VBox style="-fx-background-color: white">

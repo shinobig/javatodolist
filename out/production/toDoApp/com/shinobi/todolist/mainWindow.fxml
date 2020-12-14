@@ -25,7 +25,7 @@
     </top>
 
     <left>
-        <ListView fx:id="toDoListView"/>
+        <ListView fx:id="toDoListView" onKeyPressed="#handleKeyPress"/>
     </left>
     <center>
         <VBox style="-fx-background-color: white">
