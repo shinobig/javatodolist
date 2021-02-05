@@ -27,7 +27,12 @@
             </MenuBar>
             <ToolBar>
                 <HBox>
-                    <Button text="New..." onAction="#showNewItemDialog" />
+                    <Button text="New..." onAction="#showNewItemDialog"/>
+                    <ToggleButton fx:id="filterToggleButton" onAction="#handleFilterButton" text="Today's items">
+                        <tooltip>
+                            <Tooltip text="Button Down: Show today's items only. Button up: Show all items" />
+                        </tooltip>
+                    </ToggleButton>
                 </HBox>
             </ToolBar>
         </VBox>
